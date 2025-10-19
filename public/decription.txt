@@ -1,0 +1,53 @@
+Megjegyzés:
+upload_directory a config\Services.yaml-ban rögzítve.
+
+
+Táblák:
+
+Genrequest
+-user User
+-dcreated datetime
+-promtpositive varchar
+-promptnegative varchar
+-generated (bool)
+-startprocessing datetime
+-endprocessing datetime
++resultfile File   //Ilyen nem lesz, helyette genfiles
+-refused bool
+-refusereason varchar
+-processingunit   //hivatkozott
+-priority int (minnél nagyobb annál előrébb van a listában) ToDo: Szűrést ennek megfelelően elkészíteni
+-resolution
+-inputfile File  //A bemeneti file
+-useinputfile bool //használjon-e bemeneti filet
+
+Genfiles
+-genrequest
+-file
+
+Processingunit
+ -user
+ -hardware
+ -taskscompleted
+ -reliability
+ -securitytoken
+
+ File
+ -filename
+ -processingunit
+ -directory (Az adott processing unit melyik könyvtárában van eltárolva)
+
+ Fileuser   //A user által feltöltött fileok
+ -user
+ -file
+ -dcreated
+
+ Filerequest
+ -file File
+ -tostore  //el kell-e raktározni a filet? Ha nem, akkor fel kell tölteni a szerverre, hogy onnan a User letölthesse
+ -user User -kihez tartozik a file
+ -finished bool //Ha a kérés teljesítve van.
+ -started //elkezdődött a feldolgozása
+ -dcreated
+ -dfinished
+

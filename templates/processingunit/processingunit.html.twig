@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register processing unit{% endblock %}
+
+{% block body %}
+
+<div class="container-md">
+    {% if not hasServer%}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-4">Register as Processing Unit</h1>
+            <p>To contribute to the distributed image generation network, you can register your machine as a processing unit. This allows you to help process image generation requests from users around the world.</p>
+            <p>As a processing unit, your machine will receive image generation tasks based on its capabilities and availability. You can specify your hardware details to help match you with suitable tasks.</p>
+            <p>Benefits of registering as a processing unit:</p>
+            <ul>
+                <li>Contribute to a global network of image generation</li>
+                <li>Utilize your hardware for meaningful tasks</li>
+                <li>Help improve the speed and efficiency of image generation</li>
+            </ul>
+
+            <p>How it works:</p>
+            <p>1. Register your hardware details below.</p>
+            <p>Download and run the processing unit software on your machine - you will see all important links after registering</p>
+            <p>2. Your machine will be added to the pool of available processing units.</p>
+            <p>Please provide your hardware details to register as a processing unit.</p>
+            <form method="post" action="{{ path('app_registerprocessingunit',{mode:'register'}) }}">
+                <div class="mb-3">
+                    <label for="hardware" class="form-label">What is your hardware (processor, memory, video card) <b> You need Nvidia card at least 4GB memory.</label>
+                    <input type="text" class="form-control" name="hardware" required>
+                </div>
+            
+                <button type="submit" class="btn btn-primary">Register as Processing Unit</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="mt-4">You are already registered as a Processing Unit</h1>
+            <p>Your processing unit details:</p>
+            <ul>
+                <li><strong>Hardware:</strong> 
+                <form method="post" action="{{ path('app_registerprocessingunit',{mode:'change'}) }}" style="display:inline;">
+                    <input type ="text" class="form-control" value="{{ hardware }}" name="hardware" enabled style="width:auto; display:inline;"/>
+                    <button type="submit" class="btn btn-danger btn-sm">Change hardware</button>
+                </form>
+                </li>
+                <li><strong>Hardware:</strong> {{ hardware }}</li>
+                <li><strong>Security token (use this for setting up your device)</strong> {{ securitytoken }}</li>
+                <li><strong>Reliability (if you drop a tast, your realiability level decrease, if you sucess a tast, it grows></strong> {{ reliability }}</li>
+                <li><strong>Images processed (tasks completed):</strong> {{ taskscompleted }}</li>
+                <li>
+                <form method="post" action="{{ path('app_registerprocessingunit',{mode:'deregister'}) }}" style="display:inline;">
+                <button type="submit" class="btn btn-danger btn-sm">Deregister</button>
+                </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
